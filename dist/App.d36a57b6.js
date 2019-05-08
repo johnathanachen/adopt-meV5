@@ -25764,7 +25764,7 @@ function Pet(_ref) {
   var name = _ref.name,
       animal = _ref.animal,
       breed = _ref.breed;
-  return _react.default.createElement("div", {}, [_react.default.createElement("h1", {}, name), _react.default.createElement("h2", {}, animal), _react.default.createElement("h2", {}, breed)]);
+  return _react.default.createElement("div", null, _react.default.createElement("h1", null, name), _react.default.createElement("h2", null, animal), _react.default.createElement("h2", null, breed));
 }
 },{"react":"../node_modules/react/index.js"}],"App.js":[function(require,module,exports) {
 "use strict";
@@ -25778,22 +25778,22 @@ var _Pet = require("./Pet");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
-  return _react.default.createElement("div", {}, [_react.default.createElement("h1", {}, "Adopt Me!"), _react.default.createElement(_Pet.Pet, {
+  return _react.default.createElement("div", null, _react.default.createElement("h1", null, "Adopt Me!"), _react.default.createElement(_Pet.Pet, {
     name: "Luna",
-    animal: "dog",
+    animal: "Dog",
     breed: "Husky"
   }), _react.default.createElement(_Pet.Pet, {
-    name: "biiiirdy",
-    animal: "bird",
-    breed: "peas"
+    name: "Pepper",
+    animal: "Cat",
+    breed: "Mixed"
   }), _react.default.createElement(_Pet.Pet, {
-    name: "squirtle",
-    animal: "turtle",
-    breed: "sea"
-  })]);
+    name: "Doinky",
+    animal: "Fish",
+    breed: "Husky"
+  }));
 };
 
-(0, _reactDom.render)(_react.default.createElement(App), document.getElementById("root"));
+(0, _reactDom.render)(_react.default.createElement(App, null), document.getElementById("root"));
 },{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./Pet":"Pet.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
