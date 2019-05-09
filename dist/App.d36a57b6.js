@@ -27505,7 +27505,7 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var useDropDown = function useDropDown(label, defaultState, options) {
+var useDropdown = function useDropdown(label, defaultState, options) {
   var _useState = (0, _react.useState)(defaultState),
       _useState2 = _slicedToArray(_useState, 2),
       state = _useState2[0],
@@ -27514,7 +27514,7 @@ var useDropDown = function useDropDown(label, defaultState, options) {
   var id = "use-dropdown-".concat(label.replace(" ", "").toLowerCase());
 
   var Dropdown = function Dropdown() {
-    _react.default.createElement("label", {
+    return _react.default.createElement("label", {
       htmlFor: id
     }, label, _react.default.createElement("select", {
       id: id,
@@ -27526,18 +27526,18 @@ var useDropDown = function useDropDown(label, defaultState, options) {
         return setState(e.target.value);
       },
       disabled: options.length === 0
-    }), _react.default.createElement("option", null, "All"), options.map(function (item) {
+    }, _react.default.createElement("option", null, "All"), options.map(function (item) {
       return _react.default.createElement("option", {
         key: item,
         value: item
       }, item);
-    }));
+    })));
   };
 
   return [state, Dropdown, setState];
 };
 
-var _default = useDropDown;
+var _default = useDropdown;
 exports.default = _default;
 },{"react":"../node_modules/react/index.js"}],"SearchParams.js":[function(require,module,exports) {
 "use strict";
@@ -27549,7 +27549,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _pet = require("@frontendmasters/pet");
+var _pet = _interopRequireWildcard(require("@frontendmasters/pet"));
 
 var _useDropdown5 = _interopRequireDefault(require("./useDropdown"));
 
@@ -27582,10 +27582,24 @@ var SearchParams = function SearchParams() {
       AnimalDropdown = _useDropdown2[1];
 
   var _useDropdown3 = (0, _useDropdown5.default)("Breed", "", breeds),
-      _useDropdown4 = _slicedToArray(_useDropdown3, 2),
+      _useDropdown4 = _slicedToArray(_useDropdown3, 3),
       breed = _useDropdown4[0],
-      BreedDropdown = _useDropdown4[1];
+      BreedDropdown = _useDropdown4[1],
+      setBreed = _useDropdown4[2];
 
+  (0, _react.useEffect)(function () {
+    setBreeds([]);
+    setBreed("");
+
+    _pet.default.breeds(animal).then(function (_ref) {
+      var breeds = _ref.breeds;
+      var breedStrings = breeds.map(function (_ref2) {
+        var name = _ref2.name;
+        return name;
+      });
+      setBreeds(breedStrings);
+    }, console.error);
+  }, [setBreeds, setBreed, animal]);
   return _react.default.createElement("div", {
     className: "search-params"
   }, _react.default.createElement("form", null, _react.default.createElement("label", {
