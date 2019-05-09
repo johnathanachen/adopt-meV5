@@ -27485,7 +27485,61 @@ if (undefined === "mock") {
 }
 
 module.exports.ANIMALS = require("./animals");
-},{"./impl":"../node_modules/@frontendmasters/pet/impl.js","./animals":"../node_modules/@frontendmasters/pet/animals.js"}],"SearchParams.js":[function(require,module,exports) {
+},{"./impl":"../node_modules/@frontendmasters/pet/impl.js","./animals":"../node_modules/@frontendmasters/pet/animals.js"}],"useDropdown.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var useDropDown = function useDropDown(label, defaultState, options) {
+  var _useState = (0, _react.useState)(defaultState),
+      _useState2 = _slicedToArray(_useState, 2),
+      state = _useState2[0],
+      setState = _useState2[1];
+
+  var id = "use-dropdown-".concat(label.replace(" ", "").toLowerCase());
+
+  var Dropdown = function Dropdown() {
+    _react.default.createElement("label", {
+      htmlFor: id
+    }, label, _react.default.createElement("select", {
+      id: id,
+      value: state,
+      onChange: function onChange(e) {
+        return setState(e.target.value);
+      },
+      onBlur: function onBlur(e) {
+        return setState(e.target.value);
+      },
+      disabled: options.length === 0
+    }), _react.default.createElement("option", null, "All"), options.map(function (item) {
+      return _react.default.createElement("option", {
+        key: item,
+        value: item
+      }, item);
+    }));
+  };
+
+  return [state, Dropdown, setState];
+};
+
+var _default = useDropDown;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"SearchParams.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27496,6 +27550,10 @@ exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 
 var _pet = require("@frontendmasters/pet");
+
+var _useDropdown5 = _interopRequireDefault(require("./useDropdown"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27513,10 +27571,20 @@ var SearchParams = function SearchParams() {
       location = _useState2[0],
       setLocation = _useState2[1];
 
-  var _useState3 = (0, _react.useState)("dog"),
+  var _useState3 = (0, _react.useState)([]),
       _useState4 = _slicedToArray(_useState3, 2),
-      animal = _useState4[0],
-      setAnimal = _useState4[1];
+      breeds = _useState4[0],
+      setBreeds = _useState4[1];
+
+  var _useDropdown = (0, _useDropdown5.default)("Animal", "dog", _pet.ANIMALS),
+      _useDropdown2 = _slicedToArray(_useDropdown, 2),
+      animal = _useDropdown2[0],
+      AnimalDropdown = _useDropdown2[1];
+
+  var _useDropdown3 = (0, _useDropdown5.default)("Breed", "", breeds),
+      _useDropdown4 = _slicedToArray(_useDropdown3, 2),
+      breed = _useDropdown4[0],
+      BreedDropdown = _useDropdown4[1];
 
   return _react.default.createElement("div", {
     className: "search-params"
@@ -27529,27 +27597,12 @@ var SearchParams = function SearchParams() {
       return setLocation(event.target.value);
     },
     placeholder: "Location"
-  })), _react.default.createElement("label", {
-    htmlFor: "animal"
-  }, _react.default.createElement("select", {
-    id: "animal",
-    value: animal,
-    onChange: function onChange(e) {
-      return setAnimal(e.target.value);
-    },
-    onBlur: function onBlur(e) {
-      return setAnimal(e.target.value);
-    }
-  }, _react.default.createElement("option", null, "All"), _pet.ANIMALS.map(function (animal) {
-    return _react.default.createElement("option", {
-      value: animal
-    }, animal);
-  }))), _react.default.createElement("button", null, "Submit")));
+  })), _react.default.createElement(AnimalDropdown, null), _react.default.createElement(BreedDropdown, null), _react.default.createElement("button", null, "Submit")));
 };
 
 var _default = SearchParams;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js"}],"App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./useDropdown":"useDropdown.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -27593,7 +27646,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51469" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61381" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
