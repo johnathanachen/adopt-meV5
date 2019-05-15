@@ -32543,15 +32543,55 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _Pet = _interopRequireDefault(require("./Pet"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const Details = () => {
-  return _react.default.createElement("h1", null, "hi!");
-};
+class Details extends _react.default.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true
+    };
+  } // good for API requests, loads when application mounts
+
+
+  componentDidMount() {
+    _Pet.default.animal(this.props.id).then((_ref) => {
+      let animal = _ref.animal;
+      this.setState({
+        name: animal.name,
+        animal: animal.type,
+        location: `${animal.contact.address.city}, ${animal.contact.address.state}`,
+        description: animal.description,
+        media: animal.photos,
+        breed: animal.breeds.primary,
+        loading: false
+      });
+    });
+  }
+
+  render() {
+    if (this.state.loading) {
+      return _react.default.createElement("h1", null, "loading ...");
+    }
+
+    const _this$state = this.state,
+          animal = _this$state.animal,
+          breed = _this$state.breed,
+          location = _this$state.location,
+          description = _this$state.description,
+          name = _this$state.name;
+    return _react.default.createElement("div", {
+      className: "details"
+    }, _react.default.createElement("div", null, _react.default.createElement("h1", null, name)));
+  }
+
+}
 
 var _default = Details;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Pet":"Pet.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
